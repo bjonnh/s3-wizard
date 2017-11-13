@@ -152,4 +152,4 @@ if (must_create_user is True) or ((must_create_user is False) and (regenerate_ap
     print('[{}]\naws_access_key_id = {}\naws_secret_access_key = {}'.format(key_pair.user_name,
                                                   key_pair.id,
                                                   key_pair.secret))
-#bucket_waiter = s3_client.get_waiter('bucket_exists')
+

@@ -1,0 +1,58 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowUserToSeeBucketListInTheConsole",
+            "Action": [
+                "s3:ListAllMyBuckets",
+                "s3:GetBucketLocation",
+                "s3:GetBucketEncryption"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::*"
+            ]
+        },
+        {
+            "Sid": "AllowRootAndHomeListingOfTheBucket",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::your-bucket-name"
+            ]
+        },
+        {
+            "Sid": "DenyAllListingExceptRootAndUserFolders",
+            "Effect": "Deny",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::your-bucket-name"
+            ],
+            "Condition": {
+                "Null": {
+                    "s3:prefix": "false"
+                },
+                "StringNotLike": {
+                    "s3:prefix": [
+                        "",
+                        "${aws:username}/*"
+                    ]
+                }
+            }
+        },
+        {
+            "Sid": "AllowAllS3ActionsInUserFolder",
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::your-bucket-name/${aws:username}/*"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,42 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowUserToCreateAndListUsersForItGetList",
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetUser",
+                "iam:ListUser"
+            ],
+            "Resource": "arn:aws:iam::<YOURACCOUNTID>:user/*"
+        },
+        {
+            "Sid": "AllowUserToCreateAndListUsersForItS3WizardSpecific",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateUser",
+                "iam:CreateAccessKey",
+                "iam:DeleteAccessKey",
+                "iam:ListAccessKeys",
+                "iam:GetUser",
+                "iam:ListUser"
+            ],
+            "Resource": "arn:aws:iam::<YOURACCOUNTID>:user/s3wizard/*"
+        },
+        {
+            "Sid": "AllowUserToAttachSpecificPolicies",
+            "Effect": "Allow",
+            "Action": [
+                "iam:AttachUserPolicy"
+            ],
+            "Resource": "arn:aws:iam::<YOURACCOUNTID>:user/s3wizard/*",
+            "Condition": {
+                "ArnEquals": {
+                    "iam:PolicyArn": [
+                        "arn:aws:iam::<YOURACCOUNTID>:policy/<NAMEOFTHEUSERPOLICY>"
+                    ]
+                }
+            }
+        }
+    ]
+}
